@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Connexion — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <a href="{{ url_for('index') }}" class="auth-logo">
+        <i class="fas fa-globe-africa"></i> Immig<em>Vision</em>
+      </a>
+      <h2>Content(e) de vous revoir !</h2>
+      <p>Connectez-vous pour accéder à tous nos articles sur l'immigration, les visas et les bourses d'études internationales.</p>
+      <div class="auth-features">
+        <div class="auth-feat"><i class="fas fa-newspaper"></i> Accès illimité à tous les articles</div>
+        <div class="auth-feat"><i class="fas fa-bell"></i> Alertes sur les nouvelles opportunités</div>
+        <div class="auth-feat"><i class="fas fa-graduation-cap"></i> Guides de bourses exclusifs</div>
+        <div class="auth-feat"><i class="fas fa-shield-alt"></i> Compte 100% gratuit et sécurisé</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h1 class="auth-title">Connexion</h1>
+      <p class="auth-sub">
+        Pas encore membre ?
+        <a href="{{ url_for('register') }}">Créez un compte gratuit</a>
+      </p>
+
+      <form action="{{ url_for('login') }}{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}"
+            method="POST" class="auth-form" novalidate>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Adresse email</label>
+          <input type="email" id="email" name="email" class="form-input"
+                 placeholder="admin@immigvision.com" required autocomplete="email"
+                 value="{{ request.form.get('email', '') }}">
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Mot de passe</label>
+          <div class="input-password">
+            <input type="password" id="password" name="password" class="form-input"
+                   placeholder="••••••••" required autocomplete="current-password">
+            <button type="button" class="toggle-pw" tabindex="-1" aria-label="Afficher/masquer">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg">
+          <i class="fas fa-sign-in-alt"></i> Se connecter
+        </button>
+      </form>
+
+      <div class="auth-divider"><span>ou</span></div>
+      <a href="{{ url_for('register') }}" class="btn btn-outline btn-full">
+        Créer un compte gratuit
+      </a>
+
+      <div class="auth-demo-box">
+        <p><i class="fas fa-info-circle"></i> <strong>Compte démo :</strong></p>
+        <p>Email : <code>admin@immigvision.com</code></p>
+        <p>Mot de passe : <code>Admin@2026!</code></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

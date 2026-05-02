@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% block title %}{% if article %}Modifier{% else %}Nouvel article{% endif %} — Admin {{ site_name }}{% endblock %}
+{% block extra_head %}
+<style>
+.rich-toolbar{display:flex;flex-wrap:wrap;gap:.3rem;padding:.6rem;background:#F0F2F5;border:1.5px solid #E2E8F0;border-radius:8px 8px 0 0}
+.rich-toolbar button{background:white;border:1px solid #CBD5E1;border-radius:5px;padding:.3rem .6rem;font-size:.8rem;cursor:pointer;color:#1A3A5C;transition:all .2s;line-height:1;font-family:'DM Sans',sans-serif}
+.rich-toolbar button:hover{background:#1A3A5C;color:white;border-color:#1A3A5C}
+.rich-toolbar .tb-sep{width:1px;background:#CBD5E1;margin:0 .1rem;align-self:stretch}
+#contentEditor{width:100%;min-height:360px;border:1.5px solid #E2E8F0;border-top:none;border-radius:0 0 8px 8px;padding:1rem;font-size:.97rem;line-height:1.75;font-family:'DM Sans',sans-serif;color:#1C2B3A;resize:vertical;outline:none;overflow-y:auto}
+#contentEditor:focus{border-color:#00C2CB}
+#contentEditor h2{font-size:1.3rem;color:#1A3A5C;margin:1rem 0 .4rem;font-weight:700}
+#contentEditor h3{font-size:1.1rem;color:#1A3A5C;margin:.8rem 0 .3rem;font-weight:700}
+#contentEditor p{margin-bottom:.6rem}
+#contentEditor ul,#contentEditor ol{margin-left:1.5rem;margin-bottom:.6rem}
+#contentEditor blockquote{border-left:4px solid #00C2CB;padding:.5rem 1rem;margin:1rem 0;color:#5D7185;font-style:italic;background:#F0F2F5;border-radius:0 6px 6px 0}
+#contentSource{display:none;width:100%;min-height:360px;border:1.5px solid #00C2CB;border-top:none;border-radius:0 0 8px 8px;padding:1rem;font-family:Courier,monospace;font-size:.82rem;resize:vertical;color:#1A3A5C}
+</style>
+{% endblock %}
+{% block content %}
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-brand"><i class="fas fa-globe-africa"></i> Admin Panel</div>
+    <nav class="admin-nav">
+      <a href="{{ url_for('admin_dashboard') }}" class="admin-nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="{{ url_for('admin_articles') }}" class="admin-nav-item"><i class="fas fa-newspaper"></i> Articles</a>
+      <a href="{{ url_for('admin_article_new') }}" class="admin-nav-item {% if not article %}active{% endif %}"><i class="fas fa-plus-circle"></i> Nouvel article</a>
+      <a href="{{ url_for('admin_users') }}" class="admin-nav-item"><i class="fas fa-users"></i> Utilisateurs</a>
+      <div class="admin-nav-divider"></div>
+      <a href="{{ url_for('index') }}" class="admin-nav-item" target="_blank"><i class="fas fa-eye"></i> Voir le site</a>
+      <a href="{{ url_for('logout') }}" class="admin-nav-item text-danger"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </nav>
+  </aside>
+  <div class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">{% if article %}Modifier l'article{% else %}Nouvel article{% endif %}</h1>
+        <p class="admin-page-sub">{% if article %}ID #{{ article.id }} — {{ article.slug }}{% else %}Rédigez et publiez un nouvel article{% endif %}</p>
+      </div>
+      <a href="{{ url_for('admin_articles') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+
+    <form action="" method="POST" id="articleForm">
+      <div class="article-form-layout">
+        <!-- Colonne principale -->
+        <div class="article-form-main">
+          <div class="admin-card">
+            <div class="form-group">
+              <label class="form-label required">Titre de l'article</label>
+              <input type="text" name="title" id="articleTitle" class="form-control form-control-lg"
+                     placeholder="Titre accrocheur et descriptif..."
+                     value="{{ article.title if article else '' }}" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label required">Contenu</label>
+              <!-- Barre d'outils -->
+              <div class="rich-toolbar" id="richToolbar">
+                <button type="button" onclick="exec('bold')" title="Gras (Ctrl+B)"><i class="fas fa-bold"></i></button>
+                <button type="button" onclick="exec('italic')" title="Italique (Ctrl+I)"><i class="fas fa-italic"></i></button>
+                <button type="button" onclick="exec('underline')" title="Souligné"><i class="fas fa-underline"></i></button>
+                <div class="tb-sep"></div>
+                <button type="button" onclick="wrapBlock('h2')" title="Titre H2">H2</button>
+                <button type="button" onclick="wrapBlock('h3')" title="Titre H3">H3</button>
+                <button type="button" onclick="wrapBlock('p')" title="Paragraphe">¶</button>
+                <div class="tb-sep"></div>
+                <button type="button" onclick="exec('insertUnorderedList')" title="Liste à puces"><i class="fas fa-list-ul"></i></button>
+                <button type="button" onclick="exec('insertOrderedList')" title="Liste numérotée"><i class="fas fa-list-ol"></i></button>
+                <div class="tb-sep"></div>
+                <button type="button" onclick="wrapBlock('blockquote')" title="Citation"><i class="fas fa-quote-left"></i></button>
+                <button type="button" onclick="doLink()" title="Insérer un lien"><i class="fas fa-link"></i></button>
+                <button type="button" onclick="exec('removeFormat')" title="Effacer le format"><i class="fas fa-eraser"></i></button>
+                <div class="tb-sep"></div>
+                <button type="button" id="srcBtn" onclick="toggleSrc()" title="Vue code HTML" style="margin-left:auto;background:#E2E8F0"><i class="fas fa-code"></i> HTML</button>
+              </div>
+              <!-- Éditeur visuel -->
+              <div id="contentEditor" contenteditable="true" spellcheck="false">{% if article %}{{ article.content|safe }}{% endif %}</div>
+              <!-- Zone source HTML -->
+              <textarea id="contentSource" name="content" autocomplete="off" spellcheck="false">{% if article %}{{ article.content }}{% endif %}</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Extrait</label>
+              <textarea name="excerpt" class="form-control" rows="3" placeholder="Résumé court affiché sur la liste (laissez vide pour auto)...">{{ article.excerpt if article else '' }}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne latérale -->
+        <div class="article-form-side">
+          <!-- Publier -->
+          <div class="admin-card publish-box">
+            <h4 class="publish-box-title"><i class="fas fa-paper-plane"></i> Publication</h4>
+            <label class="toggle-label" style="display:flex;align-items:center;gap:.75rem;cursor:pointer;margin-bottom:.75rem">
+              <input type="checkbox" name="published" class="toggle-input" {% if article and article.published %}checked{% endif %}>
+              <span class="toggle-switch"></span>
+              <span style="font-size:.875rem">Publier l'article</span>
+            </label>
+            <label class="toggle-label" style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
+              <input type="checkbox" name="featured" class="toggle-input" {% if article and article.featured %}checked{% endif %}>
+              <span class="toggle-switch"></span>
+              <span style="font-size:.875rem">Mettre à la une <i class="fas fa-star" style="color:#F5A623"></i></span>
+            </label>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #E2E8F0;display:flex;flex-direction:column;gap:.5rem">
+              <button type="submit" class="btn btn-primary" style="justify-content:center">
+                <i class="fas fa-save"></i> {% if article %}Enregistrer{% else %}Créer l'article{% endif %}
+              </button>
+              {% if article %}
+              <a href="{{ url_for('article', slug=article.slug) }}" target="_blank" class="btn btn-outline" style="justify-content:center">
+                <i class="fas fa-eye"></i> Voir l'article
+              </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Catégorie -->
+          <div class="admin-card">
+            <h4 style="font-size:.875rem;font-weight:700;color:#1A3A5C;margin-bottom:.75rem"><i class="fas fa-folder" style="color:#00C2CB"></i> Catégorie</h4>
+            <select name="category_id" class="form-control">
+              <option value="">— Sans catégorie —</option>
+              {% for cat in categories %}
+              <option value="{{ cat.id }}" {% if article and article.category_id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Image -->
+          <div class="admin-card">
+            <h4 style="font-size:.875rem;font-weight:700;color:#1A3A5C;margin-bottom:.75rem"><i class="fas fa-image" style="color:#00C2CB"></i> Image de couverture</h4>
+            <input type="url" name="image_url" id="imageUrl" class="form-control"
+                   placeholder="https://images.unsplash.com/..."
+                   value="{{ article.image_url if article else '' }}">
+            <div id="imgPreview" style="margin-top:.6rem;border-radius:8px;overflow:hidden;background:#F0F2F5;min-height:90px;display:flex;align-items:center;justify-content:center">
+              {% if article and article.image_url %}
+              <img id="previewImg" src="{{ article.image_url }}" style="width:100%;height:130px;object-fit:cover;display:block">
+              {% else %}
+              <div id="previewPh" style="text-align:center;color:#94A3B8;padding:1rem;font-size:.82rem"><i class="fas fa-image" style="font-size:1.8rem;display:block;margin-bottom:.4rem"></i>Aperçu</div>
+              <img id="previewImg" src="" style="width:100%;height:130px;object-fit:cover;display:none">
+              {% endif %}
+            </div>
+            <small class="form-hint" style="margin-top:.4rem;display:block">Source : unsplash.com, pexels.com</small>
+          </div>
+
+          <!-- SEO -->
+          <div class="admin-card">
+            <h4 style="font-size:.875rem;font-weight:700;color:#1A3A5C;margin-bottom:.75rem"><i class="fas fa-search" style="color:#00C2CB"></i> SEO</h4>
+            <div class="form-group">
+              <label style="font-size:.8rem;font-weight:600;color:#1A3A5C;display:block;margin-bottom:.3rem">Méta-description <span style="color:#94A3B8;font-weight:400">(160 car.)</span></label>
+              <textarea name="meta_description" id="metaDesc" class="form-control" rows="3" maxlength="300" placeholder="Description pour Google...">{{ article.meta_description if article else '' }}</textarea>
+              <div id="metaCount" style="text-align:right;font-size:.75rem;color:#94A3B8;margin-top:.2rem">0/160</div>
+            </div>
+            <div class="form-group">
+              <label style="font-size:.8rem;font-weight:600;color:#1A3A5C;display:block;margin-bottom:.3rem">Tags <span style="color:#94A3B8;font-weight:400">(virgules)</span></label>
+              <input type="text" name="tags" class="form-control" placeholder="immigration, visa, bourse..."
+                     value="{{ article.tags if article else '' }}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const editor  = document.getElementById('contentEditor');
+const source  = document.getElementById('contentSource');
+const form    = document.getElementById('articleForm');
+let srcMode   = false;
+
+function exec(cmd) {
+  if (srcMode) return;
+  editor.focus();
+  document.execCommand(cmd, false, null);
+}
+
+function wrapBlock(tag) {
+  if (srcMode) return;
+  editor.focus();
+  document.execCommand('formatBlock', false, tag);
+}
+
+function doLink() {
+  if (srcMode) return;
+  const url = prompt('URL du lien :', 'https://');
+  if (url) { editor.focus(); document.execCommand('createLink', false, url); }
+}
+
+function toggleSrc() {
+  const btn = document.getElementById('srcBtn');
+  if (!srcMode) {
+    source.value = editor.innerHTML;
+    editor.style.display = 'none';
+    source.style.display = 'block';
+    source.name = 'content';
+    btn.innerHTML = '<i class="fas fa-eye"></i> Visuel';
+    srcMode = true;
+  } else {
+    editor.innerHTML = source.value;
+    source.style.display = 'none';
+    editor.style.display = 'block';
+    source.name = '_content_src';
+    btn.innerHTML = '<i class="fas fa-code"></i> HTML';
+    srcMode = false;
+  }
+}
+
+form.addEventListener('submit', (e) => {
+  if (!srcMode) {
+    const html = editor.innerHTML.trim();
+    if (!html || html === '<br>') {
+      e.preventDefault();
+      alert('Le contenu est obligatoire. Rédigez votre article.');
+      editor.focus();
+      return;
+    }
+    source.value = html;
+    source.name  = 'content';
+  }
+});
+
+// Entrée dans titre → ne soumet pas
+document.getElementById('articleTitle').addEventListener('keydown', e => {
+  if (e.key === 'Enter') e.preventDefault();
+});
+
+// Aperçu image
+const imgInp = document.getElementById('imageUrl');
+const prevImg = document.getElementById('previewImg');
+const prevPh  = document.getElementById('previewPh');
+if (imgInp) {
+  imgInp.addEventListener('input', () => {
+    const v = imgInp.value.trim();
+    if (v.startsWith('http')) {
+      prevImg.src = v; prevImg.style.display = 'block';
+      if (prevPh) prevPh.style.display = 'none';
+    } else {
+      prevImg.style.display = 'none';
+      if (prevPh) prevPh.style.display = 'block';
+    }
+  });
+}
+
+// Compteur méta
+const mf = document.getElementById('metaDesc');
+const mc = document.getElementById('metaCount');
+if (mf && mc) {
+  const upd = () => { mc.textContent = mf.value.length+'/160'; mc.style.color = mf.value.length > 160 ? '#E74C3C' : '#94A3B8'; };
+  mf.addEventListener('input', upd); upd();
+}
+</script>
+{% endblock %}

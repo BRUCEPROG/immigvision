@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Recherche : {{ q }} — {{ site_name }}{% endblock %}
+{% block content %}
+<div class="inner-page">
+  <div class="container">
+    <div class="inner-header">
+      <h1><i class="fas fa-search"></i> Résultats pour « {{ q }} »</h1>
+      <p>{{ articles|length }} article(s) trouvé(s)</p>
+    </div>
+    <div class="search-hero">
+      <form action="/recherche" method="GET" class="search-form-main">
+        <input type="text" name="q" value="{{ q }}" placeholder="Nouvelle recherche...">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Rechercher</button>
+      </form>
+    </div>
+    <div class="articles-grid">
+      {% for art in articles %}
+      <article class="article-card">
+        <a href="/article/{{ art.slug }}" class="card-img-link">
+          {% if art.image_url %}<img src="{{ art.image_url }}" alt="{{ art.title }}" loading="lazy">
+          {% else %}<div class="card-img-placeholder" style="background:{{ art.cat_color or '#1A3A5C' }}"><i class="fas fa-newspaper"></i></div>{% endif %}
+        </a>
+        <div class="card-body">
+          {% if art.cat_name %}<a href="/categorie/{{ art.cat_slug }}" class="cat-badge" style="background:{{ art.cat_color }}">{{ art.cat_name }}</a>{% endif %}
+          <h3><a href="/article/{{ art.slug }}">{{ art.title }}</a></h3>
+          <p class="card-excerpt">{{ art.excerpt[:130] }}...</p>
+          <div class="card-meta">
+            <span><i class="fas fa-user"></i> {{ art.author_name }}</span>
+            <span><i class="fas fa-calendar"></i> {{ art.created_at|datefmt }}</span>
+          </div>
+          <a href="/article/{{ art.slug }}" class="read-more">Lire <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+      {% else %}
+      <div class="empty-state full" style="grid-column:1/-1">
+        <i class="fas fa-search"></i>
+        <h3>Aucun résultat pour « {{ q }} »</h3>
+        <p>Essayez avec d'autres mots-clés ou parcourez nos catégories.</p>
+        <div class="empty-cats">
+          {% for cat in all_categories %}
+          <a href="/categorie/{{ cat.slug }}" class="cat-chip" style="--chip-color:{{ cat.color }}"><i class="{{ cat.icon }}"></i> {{ cat.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

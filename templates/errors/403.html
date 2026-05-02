@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Accès refusé — {{ site_name }}{% endblock %}
+{% block content %}
+<div style="min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem">
+  <div><div style="font-size:7rem;font-weight:900;color:#E74C3C;line-height:1;opacity:.15">403</div>
+  <h2 style="font-size:1.8rem;margin:.5rem 0">Accès refusé</h2>
+  <p style="color:#666;margin-bottom:2rem">Vous n'avez pas les permissions nécessaires pour accéder à cette page.</p>
+  <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Retour à l'accueil</a></div>
+</div>
+{% endblock %}

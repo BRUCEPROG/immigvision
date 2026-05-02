@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site_name }} — {{ site_tagline }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ site_tagline }}{% endblock %}">
+  <meta name="keywords" content="{% block meta_keywords %}immigration, visa, bourse, actualité immigration{% endblock %}">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="{{ site_name }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ site_name }}{% endblock %}">
+  <meta property="og:description" content="{% block og_desc %}{{ site_tagline }}{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80{% endblock %}">
+  <meta property="og:url" content="{{ request.url }}">
+  <link rel="canonical" href="{{ request.url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_head %}{% endblock %}
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"{{ site_name }}","url":"{{ request.url_root }}","description":"{{ site_tagline }}","potentialAction":{"@type":"SearchAction","target":"{{ request.url_root }}recherche?q={search_term_string}","query-input":"required name=search_term_string"}}
+  </script>
+</head>
+<body>
+
+<!-- ══ NAVBAR ════════════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+
+    <a href="{{ url_for('index') }}" class="nav-logo">
+      <span class="logo-icon"><i class="fas fa-globe-africa"></i></span>
+      <span class="logo-text">Immig<em>Vision</em></span>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('index') }}"
+         class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+        Accueil
+      </a>
+      {% for cat in all_categories %}
+      <a href="{{ url_for('category', slug=cat.slug) }}"
+         class="nav-link {% if request.endpoint == 'category' and request.view_args.get('slug') == cat.slug %}active{% endif %}">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-search-toggle" id="searchToggle" aria-label="Rechercher">
+        <i class="fas fa-search"></i>
+      </button>
+
+      {% if current_user %}
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">
+          <i class="fas fa-cog"></i> Admin
+        </a>
+        {% endif %}
+        <div class="user-menu">
+          <button class="user-avatar-btn" aria-label="Menu utilisateur">
+            <span class="avatar-circle">{{ current_user.username[0].upper() }}</span>
+            <i class="fas fa-chevron-down" style="font-size:.7rem"></i>
+          </button>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="dropdown-header">
+              <strong>{{ current_user.username }}</strong>
+              <small>{{ current_user.email }}</small>
+            </div>
+            {% if current_user.is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" class="dropdown-item">
+              <i class="fas fa-tachometer-alt"></i> Dashboard admin
+            </a>
+            <a href="{{ url_for('admin_article_new') }}" class="dropdown-item">
+              <i class="fas fa-plus"></i> Nouvel article
+            </a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}" class="dropdown-item text-danger">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+          </div>
+        </div>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Connexion</a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm">S'inscrire</a>
+      {% endif %}
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <form action="{{ url_for('search') }}" method="GET" class="search-form">
+        <i class="fas fa-search" style="color:rgba(255,255,255,.5)"></i>
+        <input type="text" name="q" placeholder="Rechercher articles immigration, visa, bourses..."
+               autocomplete="off" value="{{ request.args.get('q','') }}" aria-label="Recherche">
+        <button type="submit"><i class="fas fa-search"></i> Rechercher</button>
+        <button type="button" id="searchClose"><i class="fas fa-times"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-container">
+  {% for cat, msg in messages %}
+  <div class="flash flash-{{ cat }}">
+    <i class="fas fa-{% if cat=='success' %}check-circle{% elif cat=='danger' %}exclamation-circle{% elif cat=='warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+    <span>{{ msg }}</span>
+    <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Fermer">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<!-- ══ CONTENU ════════════════════════════════════════════════════ -->
+<main>{% block content %}{% endblock %}</main>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="newsletter-box">
+        <div class="newsletter-text">
+          <h3>Restez informé(e)</h3>
+          <p>Recevez les dernières actualités immigration directement dans votre boîte mail.</p>
+        </div>
+        <form action="{{ url_for('newsletter') }}" method="POST" class="newsletter-form">
+          <input type="email" name="email" placeholder="Votre adresse email" required aria-label="Email newsletter">
+          <button type="submit" class="btn btn-primary">
+            S'abonner <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="{{ url_for('index') }}" class="footer-logo">
+          <i class="fas fa-globe-africa"></i> Immig<em>Vision</em>
+        </a>
+        <p>Votre portail de référence sur l'immigration internationale, les visas et les opportunités académiques.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook" rel="noopener"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter" rel="noopener"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube" rel="noopener"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Catégories</h4>
+        <ul>
+          {% for cat in all_categories %}
+          <li>
+            <a href="{{ url_for('category', slug=cat.slug) }}">
+              <i class="{{ cat.icon }}"></i> {{ cat.name }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Articles récents</h4>
+        <ul>
+          {% for art in recent_articles %}
+          <li>
+            <a href="{{ url_for('article', slug=art.slug) }}">
+              {{ art.title[:50] }}{% if art.title|length > 50 %}...{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="{{ url_for('search') }}"><i class="fas fa-search"></i> Recherche</a></li>
+          {% if current_user %}
+          <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+          {% if current_user.is_admin %}
+          <li><a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-cog"></i> Administration</a></li>
+          {% endif %}
+          {% else %}
+          <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> S'inscrire</a></li>
+          <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('sitemap') }}"><i class="fas fa-sitemap"></i> Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {{ current_year }} {{ site_name }}. Tous droits réservés.</p>
+      <p>Pour information uniquement — Consultez toujours un avocat spécialisé en immigration.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

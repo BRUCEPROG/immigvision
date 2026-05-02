@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImmigVision — Votre portail de référence sur l'immigration, les visas et les bourses</title>
+  <meta name="description" content="ImmigVision : actualités immigration, guides visas USA, Canada, Europe, bourses d'études internationales pour ressortissants africains. Informations à jour 2026.">
+  <meta name="keywords" content="immigration, visa, bourse, Green Card, Canada, USA, Europe, étudiant africain, procédure immigration 2026">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ImmigVision — Immigration, Visas & Bourses">
+  <meta property="og:description" content="Votre portail de référence sur l'immigration internationale, les procédures de visa et les bourses d'études.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80">
+  <link rel="canonical" href="https://immigvision.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- JSON-LD SEO -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"ImmigVision","url":"https://immigvision.com",
+   "description":"Portail immigration, visas et bourses","potentialAction":{"@type":"SearchAction",
+   "target":"https://immigvision.com/recherche?q={search_term_string}","query-input":"required name=search_term_string"}}
+  </script>
+
+<style>
+/* ════════════════════════════════════════════════
+   IMMIGVISION — FRONTEND COMPLET (INDEX)
+   Design : Éditorial élégant Navy + Teal + Amber
+   ════════════════════════════════════════════════ */
+:root {
+  --navy:    #1A3A5C;
+  --navy-d:  #0F2340;
+  --navy-l:  #1E4570;
+  --teal:    #00C2CB;
+  --teal-d:  #00A0A8;
+  --amber:   #F5A623;
+  --amber-d: #D4890D;
+  --red:     #E74C3C;
+  --green:   #27AE60;
+  --bg:      #f8f9fb;
+  --white:   #ffffff;
+  --g1:      #F0F2F5;
+  --g2:      #E2E8F0;
+  --g3:      #94A3B8;
+  --g4:      #5D7185;
+  --text:    #1C2B3A;
+  --text-s:  #4A5568;
+  --sh:      0 4px 24px rgba(26,58,92,.09);
+  --sh-lg:   0 8px 40px rgba(26,58,92,.14);
+  --r:       12px;
+  --r-sm:    8px;
+  --fh:      'Playfair Display', Georgia, serif;
+  --fb:      'DM Sans', system-ui, sans-serif;
+  --tr:      .25s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;object-fit:cover}
+ul{list-style:none}
+.container{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.3rem;border-radius:var(--r-sm);font-size:.875rem;font-weight:600;cursor:pointer;transition:all var(--tr);border:2px solid transparent;font-family:var(--fb);white-space:nowrap}
+.btn-primary{background:var(--navy);color:white;border-color:var(--navy)}
+.btn-primary:hover{background:var(--navy-d);transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,58,92,.3)}
+.btn-outline{background:transparent;color:var(--navy);border-color:var(--g2)}
+.btn-outline:hover{border-color:var(--navy);background:var(--navy);color:white}
+.btn-teal{background:var(--teal);color:white;border-color:var(--teal)}
+.btn-teal:hover{background:var(--teal-d)}
+.btn-lg{padding:.85rem 2rem;font-size:1rem}
+.btn-sm{padding:.4rem .9rem;font-size:.8rem}
+
+/* ── NAVBAR */
+.navbar{position:sticky;top:0;z-index:1000;background:white;box-shadow:0 1px 0 var(--g2);transition:box-shadow var(--tr)}
+.navbar.scrolled{box-shadow:0 2px 20px rgba(26,58,92,.12)}
+.nav-inner{display:flex;align-items:center;gap:1rem;height:70px}
+.nav-logo{display:flex;align-items:center;gap:.6rem;font-size:1.45rem;font-weight:700;color:var(--navy);flex-shrink:0}
+.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--navy),var(--teal));border-radius:10px;display:grid;place-items:center;color:white;font-size:.95rem}
+.nav-logo em{font-style:normal;color:var(--teal)}
+.nav-links{display:flex;align-items:center;gap:.1rem;flex:1;justify-content:center}
+.nav-link{padding:.45rem .85rem;border-radius:6px;font-size:.875rem;font-weight:500;color:var(--g4);transition:all var(--tr);white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:var(--navy);background:var(--g1)}
+.nav-actions{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.nav-search-btn{background:none;border:none;cursor:pointer;width:36px;height:36px;border-radius:8px;display:grid;place-items:center;color:var(--g4);font-size:1rem;transition:all var(--tr)}
+.nav-search-btn:hover{background:var(--g1);color:var(--navy)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+
+/* Search bar */
+.search-bar{display:none;background:var(--navy);padding:.8rem 0}
+.search-bar.open{display:block;animation:slideDown .2s ease}
+.search-form-nav{display:flex;align-items:center;gap:.5rem}
+.search-form-nav input{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.65rem 1rem;color:white;font-size:.9rem;outline:none;font-family:var(--fb)}
+.search-form-nav input::placeholder{color:rgba(255,255,255,.5)}
+.search-form-nav input:focus{background:rgba(255,255,255,.15);border-color:var(--teal)}
+.search-form-nav button{background:var(--teal);border:none;color:white;padding:.65rem 1.1rem;border-radius:8px;cursor:pointer;font-size:.9rem;transition:background var(--tr)}
+.search-form-nav button:hover{background:var(--teal-d)}
+.close-search{background:rgba(255,255,255,.1)!important}
+
+/* Flash */
+.flash-zone{position:fixed;top:80px;right:1rem;z-index:2000;display:flex;flex-direction:column;gap:.5rem;max-width:380px}
+.flash{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.1rem;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;animation:slideIn .3s ease;box-shadow:var(--sh-lg)}
+.flash.success{background:#EAFAF1;color:#1E8449;border:1px solid #A9DFBF}
+.flash.info{background:#EBF5FB;color:#1A5276;border:1px solid #AED6F1}
+.flash-x{background:none;border:none;cursor:pointer;margin-left:auto;opacity:.6;font-size:.9rem;color:inherit}
+
+/* ── HERO */
+.hero{position:relative;padding:5rem 0 3.5rem;overflow:hidden;min-height:560px;
+  background:linear-gradient(135deg,var(--navy-d) 0%,var(--navy) 50%,#0D4C6B 100%)}
+.hero-bg-fx{position:absolute;inset:0;pointer-events:none}
+.hero-blob-1{position:absolute;top:-10%;left:-5%;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,194,203,.12) 0%,transparent 70%)}
+.hero-blob-2{position:absolute;bottom:-15%;right:-5%;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,166,35,.1) 0%,transparent 70%)}
+.hero-grid-pattern{position:absolute;inset:0;opacity:.04;
+  background-image:linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);
+  background-size:40px 40px}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,194,203,.15);
+  color:var(--teal);border:1px solid rgba(0,194,203,.3);border-radius:20px;padding:.35rem 1rem;
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem}
+.hero-title{font-family:var(--fh);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;color:white;line-height:1.12;margin-bottom:1.25rem}
+.hero-title em{font-style:italic;color:var(--teal)}
+.hero-sub{color:rgba(255,255,255,.7);font-size:1.05rem;max-width:560px;line-height:1.75;margin-bottom:2rem}
+.hero-search-wrap{background:white;border-radius:50px;padding:.4rem .4rem .4rem 1.2rem;
+  box-shadow:0 8px 40px rgba(0,0,0,.25);display:flex;align-items:center;gap:.5rem;max-width:600px;margin-bottom:1.5rem}
+.hero-search-wrap i{color:var(--g3);flex-shrink:0}
+.hero-search-wrap input{flex:1;border:none;outline:none;font-size:.95rem;color:var(--text);background:transparent;font-family:var(--fb)}
+.hero-search-wrap button{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:white;border:none;
+  padding:.7rem 1.6rem;border-radius:40px;font-weight:600;cursor:pointer;font-size:.875rem;white-space:nowrap;transition:all var(--tr);font-family:var(--fb)}
+.hero-search-wrap button:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(0,194,203,.4)}
+.hero-tags{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.hero-tag-label{color:rgba(255,255,255,.45);font-size:.8rem}
+.hero-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.13);
+  padding:.28rem .75rem;border-radius:20px;font-size:.78rem;transition:all var(--tr)}
+.hero-tag:hover{background:rgba(255,255,255,.18)}
+
+/* Hero stats card */
+.hero-stats-card{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:2rem;display:flex;flex-direction:column;gap:1.5rem}
+.stat-row{display:flex;align-items:center;gap:1rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stat-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
+.stat-num{font-size:1.6rem;font-weight:800;color:white;font-family:var(--fh);display:block;line-height:1}
+.stat-lbl{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:.1rem}
+.hero-wave{position:absolute;bottom:-1px;left:0;right:0;line-height:0}
+.hero-wave svg{width:100%;height:70px}
+
+/* ── CAT STRIP */
+.cat-strip{padding:.85rem 0;border-bottom:1px solid var(--g2);background:white;position:relative;z-index:2}
+.cat-chips{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.cat-chips::-webkit-scrollbar{display:none}
+.cat-chip-label{font-size:.75rem;font-weight:700;color:var(--g3);white-space:nowrap;display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.cat-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .9rem;border-radius:20px;
+  font-size:.78rem;font-weight:600;color:white;transition:all var(--tr);white-space:nowrap;flex-shrink:0;background:var(--col,var(--navy))}
+.cat-chip:hover{opacity:.85;transform:translateY(-1px)}
+
+/* ── SECTION */
+.section{padding:4rem 0}
+.section-bg-white{background:white}
+.sh{margin-bottom:2rem}
+.sh-label{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--teal);margin-bottom:.5rem}
+.sh-title{font-family:var(--fh);font-size:clamp(1.5rem,3vw,2rem);color:var(--navy);font-weight:800}
+.sh-sub{color:var(--g4);margin-top:.5rem;font-size:.95rem}
+.sh.center{text-align:center}
+.sh.center .sh-sub{margin:0 auto;max-width:580px}
+
+/* ── FEATURED */
+.featured-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:1.5rem}
+.feat-main{border-radius:var(--r);overflow:hidden;background:white;box-shadow:var(--sh);display:grid;grid-template-rows:300px 1fr}
+.feat-main-img{position:relative;overflow:hidden}
+.feat-main-img img{width:100%;height:100%;transition:transform .5s ease}
+.feat-main:hover .feat-main-img img{transform:scale(1.04)}
+.feat-main-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(15,35,64,.55))}
+.feat-main-body{padding:1.5rem}
+.feat-main-body h2{font-family:var(--fh);font-size:1.45rem;color:var(--navy);margin:.6rem 0 .75rem;line-height:1.3}
+.feat-main-body h2 a:hover{color:var(--teal)}
+.feat-main-body p{color:var(--text-s);font-size:.9rem;line-height:1.7}
+.feat-side{display:flex;flex-direction:column;gap:1.5rem}
+.feat-card{display:grid;grid-template-columns:130px 1fr;border-radius:var(--r);overflow:hidden;background:white;box-shadow:var(--sh);transition:all var(--tr)}
+.feat-card:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.feat-card-img{height:130px;overflow:hidden}
+.feat-card-img img{width:100%;height:100%;transition:transform .4s}
+.feat-card:hover .feat-card-img img{transform:scale(1.06)}
+.feat-card-body{padding:1rem;display:flex;flex-direction:column;justify-content:space-between;gap:.4rem}
+.feat-card-body h3{font-family:var(--fh);font-size:.95rem;color:var(--navy);line-height:1.35}
+.feat-card-body h3 a:hover{color:var(--teal)}
+
+/* ── CARDS */
+.cat-badge{display:inline-flex;align-items:center;padding:.22rem .68rem;border-radius:20px;
+  font-size:.7rem;font-weight:700;color:white;text-transform:uppercase;letter-spacing:.04em;width:fit-content;flex-shrink:0}
+.cat-badge.lg{font-size:.8rem;padding:.3rem .9rem}
+.cat-badge.sm{font-size:.67rem;padding:.18rem .55rem}
+.card-meta{display:flex;flex-wrap:wrap;gap:.5rem;font-size:.77rem;color:var(--g3)}
+.card-meta span{display:flex;align-items:center;gap:.3rem}
+.read-more{display:inline-flex;align-items:center;gap:.4rem;color:var(--navy);font-size:.85rem;font-weight:600;border-top:1px solid var(--g2);padding-top:.75rem;margin-top:auto;transition:gap var(--tr)}
+.read-more:hover{color:var(--teal);gap:.65rem}
+.locked-icon{font-size:.7em;opacity:.6}
+
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.5rem}
+.article-card{background:white;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:all var(--tr);display:flex;flex-direction:column}
+.article-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
+.card-img-link{display:block;height:200px;overflow:hidden;position:relative;flex-shrink:0}
+.card-img-link img{width:100%;height:100%;transition:transform .4s}
+.article-card:hover .card-img-link img{transform:scale(1.05)}
+.card-img-ph{width:100%;height:100%;display:grid;place-items:center;font-size:2rem;color:rgba(255,255,255,.3)}
+.feat-badge{position:absolute;top:.75rem;right:.75rem;background:var(--amber);color:white;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;font-size:.7rem}
+.card-body{padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card-body h3{font-family:var(--fh);font-size:1.05rem;color:var(--navy);line-height:1.38}
+.card-body h3 a:hover{color:var(--teal)}
+.card-excerpt{color:var(--text-s);font-size:.875rem;line-height:1.65;flex:1}
+
+/* ── PAYWALL BANNER */
+.pw-banner{background:linear-gradient(135deg,var(--navy-d),var(--navy));padding:2.5rem 0}
+.pw-inner{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.pw-icon{font-size:3rem;color:var(--teal);animation:pulse 2.5s infinite}
+.pw-text h3{font-family:var(--fh);font-size:1.5rem;color:white;margin-bottom:.4rem}
+.pw-text p{color:rgba(255,255,255,.65)}
+.pw-btns{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-left:auto}
+.pw-btns .btn-outline{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3)}
+.pw-btns .btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:white}
+
+/* ── WHY */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;margin-top:2rem}
+.why-card{padding:1.75rem;border-radius:var(--r);border:1px solid var(--g2);transition:all var(--tr);background:white}
+.why-card:hover{border-color:var(--teal);box-shadow:var(--sh);transform:translateY(-2px)}
+.why-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.3rem;margin-bottom:1rem;transition:transform var(--tr)}
+.why-card:hover .why-icon{transform:scale(1.08)}
+.why-card h4{font-size:1rem;color:var(--navy);margin-bottom:.5rem}
+.why-card p{font-size:.875rem;color:var(--text-s);line-height:1.65}
+
+/* ── NEWSLETTER */
+.nl-section{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-l) 100%);padding:4rem 0}
+.nl-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:center}
+.nl-left h2{font-family:var(--fh);font-size:1.9rem;color:white;margin-bottom:.75rem}
+.nl-left p{color:rgba(255,255,255,.65);line-height:1.7}
+.nl-perks{margin-top:1.5rem;display:flex;flex-direction:column;gap:.6rem}
+.nl-perk{display:flex;align-items:center;gap:.65rem;color:rgba(255,255,255,.8);font-size:.875rem}
+.nl-perk i{color:var(--teal);width:16px;text-align:center}
+.nl-form-wrap{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2rem}
+.nl-form-wrap h3{font-family:var(--fh);font-size:1.2rem;color:white;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+.nl-form{display:flex;flex-direction:column;gap:.75rem}
+.nl-field{position:relative}
+.nl-field i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:.9rem}
+.nl-field input{width:100%;padding:.8rem 1rem .8rem 2.5rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:white;font-size:.9rem;outline:none;font-family:var(--fb);transition:border-color var(--tr)}
+.nl-field input::placeholder{color:rgba(255,255,255,.4)}
+.nl-field input:focus{border-color:var(--teal);background:rgba(255,255,255,.14)}
+.nl-btn{width:100%;justify-content:center;padding:.9rem;border-radius:10px;font-size:.95rem}
+.nl-note{font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;margin-top:.25rem}
+
+/* ── CATEGORIES CARDS */
+.cat-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.cat-card{padding:1.5rem;border-radius:var(--r);text-align:center;color:white;transition:all var(--tr);position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.15);transition:opacity var(--tr)}
+.cat-card:hover::before{opacity:0}
+.cat-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
+.cat-card-icon{font-size:2.2rem;margin-bottom:.75rem;position:relative;z-index:1}
+.cat-card h4{font-size:1rem;font-weight:600;position:relative;z-index:1;margin-bottom:.25rem}
+.cat-card small{font-size:.75rem;opacity:.75;position:relative;z-index:1}
+
+/* ── FOOTER */
+.footer{background:var(--navy-d)}
+.footer-top{padding:3.5rem 0}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:2.5rem}
+.f-brand .f-logo{display:flex;align-items:center;gap:.6rem;font-size:1.3rem;font-weight:700;color:white;margin-bottom:1rem}
+.f-brand .f-logo i{color:var(--teal)}
+.f-brand .f-logo em{font-style:normal;color:var(--teal)}
+.f-brand p{color:rgba(255,255,255,.45);font-size:.875rem;line-height:1.7;margin-bottom:1.5rem}
+.socials{display:flex;gap:.6rem}
+.socials a{width:38px;height:38px;background:rgba(255,255,255,.07);border-radius:9px;display:grid;place-items:center;color:rgba(255,255,255,.55);font-size:1rem;transition:all var(--tr)}
+.socials a:hover{background:var(--teal);color:white}
+.f-col h5{font-size:.875rem;font-weight:700;color:white;margin-bottom:1rem}
+.f-col ul li{margin-bottom:.55rem}
+.f-col ul li a{color:rgba(255,255,255,.5);font-size:.875rem;display:flex;align-items:center;gap:.5rem;transition:color var(--tr)}
+.f-col ul li a:hover{color:var(--teal)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding:1.25rem 0}
+.footer-bottom .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.footer-bottom p{color:rgba(255,255,255,.3);font-size:.8rem}
+
+/* ── MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,35,64,.7);backdrop-filter:blur(6px);z-index:3000;
+  display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:white;border-radius:20px;width:100%;max-width:480px;overflow:hidden;
+  transform:translateY(20px);transition:transform .25s;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-header{padding:1.5rem 1.5rem .75rem;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-family:var(--fh);font-size:1.4rem;color:var(--navy)}
+.modal-close{background:var(--g1);border:none;border-radius:8px;width:34px;height:34px;cursor:pointer;
+  display:grid;place-items:center;color:var(--g4);font-size:1rem;transition:all var(--tr)}
+.modal-close:hover{background:var(--navy);color:white}
+.modal-body{padding:.75rem 1.5rem 1.75rem}
+.modal-sub{color:var(--g3);font-size:.875rem;margin-bottom:1.5rem}
+.modal-sub a{color:var(--teal);font-weight:600}
+.form-grp{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.form-grp label{font-size:.82rem;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:.35rem}
+.form-grp .inp{padding:.72rem .9rem;border:1.5px solid var(--g2);border-radius:8px;font-size:.9rem;color:var(--text);outline:none;transition:border-color var(--tr);font-family:var(--fb);width:100%}
+.form-grp .inp:focus{border-color:var(--teal)}
+.pw-wrap{position:relative}
+.pw-wrap .inp{padding-right:3rem;width:100%}
+.pw-eye{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--g3);font-size:.9rem}
+.modal-btn{width:100%;justify-content:center;padding:.85rem;font-size:.95rem;margin-top:.25rem}
+.modal-divider{text-align:center;position:relative;margin:1.1rem 0;color:var(--g3);font-size:.82rem}
+.modal-divider::before,.modal-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--g2)}
+.modal-divider::before{left:0}.modal-divider::after{right:0}
+.modal-alt{text-align:center;font-size:.85rem;color:var(--g4);margin-top:1rem}
+.modal-alt a{color:var(--teal);font-weight:600}
+.form-check{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--text-s);margin-top:.25rem}
+.form-check input{margin-top:.15rem;width:auto}
+.form-check a{color:var(--teal)}
+
+/* ── BACK TO TOP */
+.back-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;background:var(--navy);color:white;
+  border:none;border-radius:12px;cursor:pointer;display:none;place-items:center;font-size:1rem;
+  box-shadow:var(--sh-lg);transition:all var(--tr);z-index:999}
+.back-top.show{display:grid}
+.back-top:hover{background:var(--teal);transform:translateY(-2px)}
+
+/* Reading progress */
+#read-prog{position:fixed;top:70px;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--navy));width:0%;z-index:999;transition:width .1s}
+
+/* ── ANIMATIONS */
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE */
+@media(max-width:1024px){.featured-grid{grid-template-columns:1fr}.feat-side{flex-direction:row}
+  .footer-grid{grid-template-columns:1fr 1fr}.nl-inner{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .nav-links{display:none;position:fixed;inset:70px 0 0;background:white;flex-direction:column;padding:1.5rem;gap:.2rem;z-index:900;overflow-y:auto}
+  .nav-links.open{display:flex;animation:fadeIn .2s}
+  .hamburger{display:flex}
+  .hero-inner{grid-template-columns:1fr}.hero-stats-card{display:none}
+  .articles-grid{grid-template-columns:1fr}
+  .feat-side{flex-direction:column}
+  .pw-inner{flex-direction:column;text-align:center}.pw-btns{margin-left:0}
+  .cat-cards-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.hero-title{font-size:1.8rem}.why-grid{grid-template-columns:1fr}.cat-cards-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="logo-icon"><i class="fas fa-globe-africa"></i></span>
+      <span>Immig<em>Vision</em></span>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#" class="nav-link active">Accueil</a>
+      <a href="#" class="nav-link">Immigration</a>
+      <a href="#" class="nav-link">Visas</a>
+      <a href="#" class="nav-link">Bourses</a>
+      <a href="#" class="nav-link">Actualités</a>
+      <a href="#" class="nav-link">Guides</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-search-btn" id="searchToggle" aria-label="Recherche"><i class="fas fa-search"></i></button>
+      <button class="btn btn-outline btn-sm" onclick="openModal('loginModal')">Connexion</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('registerModal')">S'inscrire</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <!-- Search bar -->
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <form class="search-form-nav" onsubmit="return false">
+        <i class="fas fa-search" style="color:rgba(255,255,255,.5)"></i>
+        <input type="text" placeholder="Rechercher... visa USA, bourses 2026, immigration Canada...">
+        <button type="submit"><i class="fas fa-search"></i> Rechercher</button>
+        <button type="button" class="close-search" id="closeSearch"><i class="fas fa-times"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash zone -->
+<div class="flash-zone" id="flashZone"></div>
+<div id="read-prog"></div>
+
+<!-- ═══════ HERO ══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg-fx">
+    <div class="hero-blob-1"></div>
+    <div class="hero-blob-2"></div>
+    <div class="hero-grid-pattern"></div>
+  </div>
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-globe-africa"></i> Votre guide de l'immigration 2026</div>
+      <h1 class="hero-title">
+        Tout savoir sur<br>
+        <em>l'immigration,</em> les visas<br>
+        et les <em>bourses</em> d'études
+      </h1>
+      <p class="hero-sub">Actualités, guides pratiques et conseils d'experts pour réussir vos démarches d'immigration à l'international — Canada, USA, Europe et plus.</p>
+      <div class="hero-search-wrap">
+        <i class="fas fa-search"></i>
+        <input type="text" id="heroSearch" placeholder="Rechercher... visa USA, bourses 2026, immigration Canada...">
+        <button onclick="showFlash('Recherche en cours...','info')"><i class="fas fa-search"></i> Rechercher</button>
+      </div>
+      <div class="hero-tags">
+        <span class="hero-tag-label">Tendances :</span>
+        <a href="#" class="hero-tag">Visa H-1B</a>
+        <a href="#" class="hero-tag">Green Card famille</a>
+        <a href="#" class="hero-tag">Bourses 2026</a>
+        <a href="#" class="hero-tag">Express Entry Canada</a>
+        <a href="#" class="hero-tag">Schengen</a>
+      </div>
+    </div>
+
+    <div class="hero-stats-card">
+      <div class="stat-row">
+        <div class="stat-icon" style="background:rgba(0,194,203,.15);color:var(--teal)"><i class="fas fa-newspaper"></i></div>
+        <div>
+          <span class="stat-num" data-count="247">0</span>
+          <div class="stat-lbl">Articles publiés</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon" style="background:rgba(245,166,35,.15);color:var(--amber)"><i class="fas fa-users"></i></div>
+        <div>
+          <span class="stat-num" data-count="3800">0</span>
+          <div class="stat-lbl">Membres inscrits</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon" style="background:rgba(39,174,96,.15);color:#27AE60"><i class="fas fa-graduation-cap"></i></div>
+        <div>
+          <span class="stat-num" data-count="89">0</span>
+          <div class="stat-lbl">Bourses référencées</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon" style="background:rgba(231,76,60,.15);color:var(--red)"><i class="fas fa-eye"></i></div>
+        <div>
+          <span class="stat-num" data-count="120000">0</span>
+          <div class="stat-lbl">Vues ce mois</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-wave"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="#f8f9fb" d="M0,35 C360,70 1080,0 1440,35 L1440,70 L0,70 Z"/></svg></div>
+</section>
+
+<!-- ═══════ CATÉGORIES STRIP ════════════════════════ -->
+<div class="cat-strip">
+  <div class="container">
+    <div class="cat-chips">
+      <span class="cat-chip-label"><i class="fas fa-th-large"></i> Catégories</span>
+      <a href="#" class="cat-chip" style="--col:#1A3A5C"><i class="fas fa-globe-europe"></i> Immigration</a>
+      <a href="#" class="cat-chip" style="--col:#00C2CB"><i class="fas fa-passport"></i> Visas</a>
+      <a href="#" class="cat-chip" style="--col:#F5A623"><i class="fas fa-graduation-cap"></i> Bourses</a>
+      <a href="#" class="cat-chip" style="--col:#E74C3C"><i class="fas fa-newspaper"></i> Actualités</a>
+      <a href="#" class="cat-chip" style="--col:#2ECC71"><i class="fas fa-map-marked-alt"></i> Guides</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FEATURED ARTICLES ══════════════════════ -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-label"><i class="fas fa-star"></i> À la une</div>
+      <h2 class="sh-title">Articles à la une</h2>
+    </div>
+    <div class="featured-grid">
+      <!-- Main featured -->
+      <article class="feat-main reveal">
+        <div class="feat-main-img card-img-link" style="height:300px">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Visa travail USA">
+          <div class="feat-main-overlay"></div>
+        </div>
+        <div class="feat-main-body">
+          <span class="cat-badge" style="background:#00C2CB">Visas</span>
+          <h2><a href="#" onclick="showPaywall(event)">Comment obtenir un visa de travail aux États-Unis en 2026</a></h2>
+          <p>Guide complet pour naviguer les procédures H-1B, L-1 et EB : documents requis, délais, frais et nouveaux changements Trump 2025-2026.</p>
+          <div class="card-meta" style="margin-top:.75rem">
+            <span><i class="fas fa-user"></i> Rédaction ImmigVision</span>
+            <span><i class="fas fa-calendar"></i> 28 mars 2026</span>
+            <span><i class="fas fa-clock"></i> 7 min</span>
+            <span><i class="fas fa-eye"></i> 847</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Side featured -->
+      <div class="feat-side">
+        <article class="feat-card reveal">
+          <div class="feat-card-img card-img-link"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=80" alt="Bourses"></div>
+          <div class="feat-card-body">
+            <span class="cat-badge sm" style="background:#F5A623">Bourses</span>
+            <h3><a href="#" onclick="showPaywall(event)">Top 10 des bourses pour étudiants africains en 2026</a></h3>
+            <div class="card-meta"><span><i class="fas fa-calendar"></i> 25 mars 2026</span><span><i class="fas fa-clock"></i> 6 min</span></div>
+          </div>
+        </article>
+        <article class="feat-card reveal">
+          <div class="feat-card-img card-img-link"><img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?w=400&q=80" alt="Canada"></div>
+          <div class="feat-card-body">
+            <span class="cat-badge sm" style="background:#1A3A5C">Immigration</span>
+            <h3><a href="#" onclick="showPaywall(event)">Immigration Canada 2026 : nouvelles règles Express Entry</a></h3>
+            <div class="card-meta"><span><i class="fas fa-calendar"></i> 20 mars 2026</span><span><i class="fas fa-clock"></i> 5 min</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PAYWALL BANNER ════════════════════════════ -->
+<section class="pw-banner">
+  <div class="container">
+    <div class="pw-inner">
+      <div class="pw-icon"><i class="fas fa-lock-open"></i></div>
+      <div class="pw-text">
+        <h3>Accédez à tous nos articles gratuitement</h3>
+        <p>Inscrivez-vous et lisez l'intégralité de chaque article sans restriction. 100% gratuit.</p>
+      </div>
+      <div class="pw-btns">
+        <button class="btn btn-teal btn-lg" onclick="openModal('registerModal')">
+          <i class="fas fa-user-plus"></i> Créer un compte gratuit
+        </button>
+        <button class="btn btn-outline" onclick="openModal('loginModal')">Déjà membre ?</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LATEST ARTICLES ═══════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-label"><i class="fas fa-clock"></i> Récents</div>
+      <h2 class="sh-title">Derniers articles</h2>
+    </div>
+    <div class="articles-grid" id="articlesGrid">
+      <!-- Article cards (generated by JS demo data) -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CATÉGORIES CARDS ════════════════════════ -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="sh center">
+      <div class="sh-label"><i class="fas fa-th-large"></i> Explorer</div>
+      <h2 class="sh-title">Parcourir par catégorie</h2>
+      <p class="sh-sub">Des milliers d'articles organisés par thématique pour trouver rapidement l'information dont vous avez besoin.</p>
+    </div>
+    <div class="cat-cards-grid" style="margin-top:2rem">
+      <a href="#" class="cat-card reveal" style="background:linear-gradient(135deg,#1A3A5C,#0F2340)">
+        <div class="cat-card-icon"><i class="fas fa-globe-europe"></i></div>
+        <h4>Immigration</h4>
+        <small>63 articles</small>
+      </a>
+      <a href="#" class="cat-card reveal" style="background:linear-gradient(135deg,#00C2CB,#00909A)">
+        <div class="cat-card-icon"><i class="fas fa-passport"></i></div>
+        <h4>Visas</h4>
+        <small>89 articles</small>
+      </a>
+      <a href="#" class="cat-card reveal" style="background:linear-gradient(135deg,#F5A623,#D4890D)">
+        <div class="cat-card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h4>Bourses</h4>
+        <small>47 articles</small>
+      </a>
+      <a href="#" class="cat-card reveal" style="background:linear-gradient(135deg,#E74C3C,#C0392B)">
+        <div class="cat-card-icon"><i class="fas fa-newspaper"></i></div>
+        <h4>Actualités</h4>
+        <small>35 articles</small>
+      </a>
+      <a href="#" class="cat-card reveal" style="background:linear-gradient(135deg,#2ECC71,#1E8449)">
+        <div class="cat-card-icon"><i class="fas fa-map-marked-alt"></i></div>
+        <h4>Guides</h4>
+        <small>28 articles</small>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY JOIN ══════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="sh center">
+      <div class="sh-label"><i class="fas fa-heart"></i> Pourquoi nous ?</div>
+      <h2 class="sh-title">Tout ce dont vous avez besoin</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:#E8F4FD;color:#1A3A5C"><i class="fas fa-newspaper"></i></div>
+        <h4>Actualités en temps réel</h4>
+        <p>Restez informé des dernières nouvelles et changements de politique d'immigration mondiale.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:#E8F8F5;color:#00C2CB"><i class="fas fa-passport"></i></div>
+        <h4>Guides pratiques détaillés</h4>
+        <p>Des guides étape par étape pour vos demandes de visa, bourses et immigration.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:#FEF9E7;color:#F5A623"><i class="fas fa-graduation-cap"></i></div>
+        <h4>Opportunités académiques</h4>
+        <p>Découvrez les meilleures bourses disponibles pour les étudiants internationaux.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:#FDEDEC;color:#E74C3C"><i class="fas fa-users"></i></div>
+        <h4>Communauté active</h4>
+        <p>Rejoignez des milliers de membres qui partagent leurs expériences et conseils.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════════════════════════════ -->
+<section class="nl-section">
+  <div class="container">
+    <div class="nl-inner">
+      <div class="nl-left">
+        <h2>Restez informé(e) sur l'immigration</h2>
+        <p>Recevez chaque semaine les meilleures actualités immigration, nouveaux visas et bourses d'études directement dans votre boîte mail.</p>
+        <div class="nl-perks">
+          <div class="nl-perk"><i class="fas fa-check"></i> Newsletter hebdomadaire soignée</div>
+          <div class="nl-perk"><i class="fas fa-check"></i> Alertes bourses en avant-première</div>
+          <div class="nl-perk"><i class="fas fa-check"></i> Guides et templates exclusifs</div>
+          <div class="nl-perk"><i class="fas fa-check"></i> 100% gratuit — désinscription en 1 clic</div>
+        </div>
+      </div>
+      <div class="nl-form-wrap">
+        <h3><i class="fas fa-envelope" style="color:var(--teal)"></i> S'abonner à la newsletter</h3>
+        <form class="nl-form" onsubmit="nlSubmit(event)">
+          <div class="nl-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Votre prénom" required>
+          </div>
+          <div class="nl-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="nlEmail" placeholder="Votre adresse email" required>
+          </div>
+          <button type="submit" class="btn btn-teal nl-btn"><i class="fas fa-paper-plane"></i> S'abonner gratuitement</button>
+          <p class="nl-note"><i class="fas fa-shield-alt"></i> Vos données sont protégées. Désinscription à tout moment.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div class="f-brand">
+        <a href="#" class="f-logo"><i class="fas fa-globe-africa"></i> Immig<em>Vision</em></a>
+        <p>Votre portail de référence sur l'immigration internationale, les visas et les opportunités académiques à l'international.</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h5>Catégories</h5>
+        <ul>
+          <li><a href="#"><i class="fas fa-globe-europe"></i> Immigration</a></li>
+          <li><a href="#"><i class="fas fa-passport"></i> Visas</a></li>
+          <li><a href="#"><i class="fas fa-graduation-cap"></i> Bourses</a></li>
+          <li><a href="#"><i class="fas fa-newspaper"></i> Actualités</a></li>
+          <li><a href="#"><i class="fas fa-map-marked-alt"></i> Guides</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>Destinations</h5>
+        <ul>
+          <li><a href="#"><i class="fas fa-flag"></i> États-Unis (USA)</a></li>
+          <li><a href="#"><i class="fas fa-flag"></i> Canada</a></li>
+          <li><a href="#"><i class="fas fa-flag"></i> France</a></li>
+          <li><a href="#"><i class="fas fa-flag"></i> Royaume-Uni</a></li>
+          <li><a href="#"><i class="fas fa-flag"></i> Europe (Schengen)</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>Liens utiles</h5>
+        <ul>
+          <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="#" onclick="openModal('registerModal');return false"><i class="fas fa-user-plus"></i> S'inscrire</a></li>
+          <li><a href="#" onclick="openModal('loginModal');return false"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+          <li><a href="#"><i class="fas fa-sitemap"></i> Sitemap</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; 2026 ImmigVision. Tous droits réservés.</p>
+      <p>Pour information uniquement — Consultez toujours un avocat spécialisé en immigration.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ═══════ MODAL CONNEXION ═══════════════════════════ -->
+<div class="modal-overlay" id="loginModal" onclick="closeOnBg(event,'loginModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-sign-in-alt" style="color:var(--teal)"></i> Connexion</h3>
+      <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-sub">Pas encore membre ? <a href="#" onclick="switchModal('loginModal','registerModal')">Créez un compte gratuit</a></p>
+      <form onsubmit="loginSubmit(event)">
+        <div class="form-grp">
+          <label><i class="fas fa-envelope"></i> Adresse email</label>
+          <input type="email" class="inp" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-grp">
+          <label><i class="fas fa-lock"></i> Mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" class="inp" id="loginPw" placeholder="••••••••" required>
+            <button type="button" class="pw-eye" onclick="togglePw('loginPw',this)"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary modal-btn"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+      </form>
+      <div class="modal-divider"><span>ou</span></div>
+      <button class="btn btn-outline modal-btn" onclick="switchModal('loginModal','registerModal')">Créer un compte gratuit</button>
+      <p class="modal-alt"><small>🔐 Compte démo : admin@immigvision.com / Admin@2026!</small></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL INSCRIPTION ════════════════════════ -->
+<div class="modal-overlay" id="registerModal" onclick="closeOnBg(event,'registerModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-plus" style="color:var(--teal)"></i> Créer un compte</h3>
+      <button class="modal-close" onclick="closeModal('registerModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-sub">Déjà membre ? <a href="#" onclick="switchModal('registerModal','loginModal')">Se connecter</a></p>
+      <form onsubmit="registerSubmit(event)">
+        <div class="form-grp">
+          <label><i class="fas fa-user"></i> Nom d'utilisateur</label>
+          <input type="text" class="inp" placeholder="votre_nom" required minlength="3">
+        </div>
+        <div class="form-grp">
+          <label><i class="fas fa-envelope"></i> Adresse email</label>
+          <input type="email" class="inp" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-grp">
+          <label><i class="fas fa-lock"></i> Mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" class="inp" id="regPw" placeholder="8 caractères minimum" required minlength="8" oninput="checkStrength(this)">
+            <button type="button" class="pw-eye" onclick="togglePw('regPw',this)"><i class="fas fa-eye"></i></button>
+          </div>
+          <div id="pwBar" style="height:4px;border-radius:2px;margin-top:.3rem;transition:all .3s"></div>
+        </div>
+        <div class="form-grp">
+          <label><i class="fas fa-lock"></i> Confirmer le mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" class="inp" id="regPw2" placeholder="Répétez le mot de passe" required>
+            <button type="button" class="pw-eye" onclick="togglePw('regPw2',this)"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="acceptTerms" required>
+          <label for="acceptTerms">J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary modal-btn" style="margin-top:.75rem"><i class="fas fa-user-plus"></i> Créer mon compte gratuit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL PAYWALL ═════════════════════════════ -->
+<div class="modal-overlay" id="paywallModal" onclick="closeOnBg(event,'paywallModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-lock" style="color:var(--amber)"></i> Article réservé aux membres</h3>
+      <button class="modal-close" onclick="closeModal('paywallModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      <div style="font-size:3.5rem;color:var(--teal);margin-bottom:1rem"><i class="fas fa-newspaper"></i></div>
+      <p style="color:var(--text-s);margin-bottom:1.5rem">Créez un compte <strong>gratuit</strong> pour lire l'intégralité de cet article et accéder à tous nos contenus sans restriction.</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;text-align:left;background:var(--g1);border-radius:10px;padding:1rem">
+        <div style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-s)"><i class="fas fa-check" style="color:var(--green)"></i> Accès illimité à tous les articles</div>
+        <div style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-s)"><i class="fas fa-check" style="color:var(--green)"></i> Newsletter hebdomadaire</div>
+        <div style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-s)"><i class="fas fa-check" style="color:var(--green)"></i> 100% gratuit, sans engagement</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="switchModal('paywallModal','registerModal')" style="width:100%;justify-content:center">
+        <i class="fas fa-user-plus"></i> Créer mon compte gratuit
+      </button>
+      <p style="margin-top:.75rem;font-size:.85rem;color:var(--g3)">Déjà membre ? <a href="#" onclick="switchModal('paywallModal','loginModal')" style="color:var(--teal);font-weight:600">Se connecter</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  IMMIGVISION — FRONTEND JAVASCRIPT
+// ═══════════════════════════════════════════
+
+// ── DEMO DATA ─────────────────────────────
+const ARTICLES = [
+  {title:"Visa Schengen 2026 : nouvelles règles et pays concernés",cat:"Visas",catColor:"#00C2CB",img:"https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80",author:"Marie Dupont",date:"30 mars 2026",time:"4",views:312,excerpt:"Le visa Schengen permet de voyager dans 26 pays européens. Découvrez les nouvelles procédures et les documents requis pour 2026.",featured:true},
+  {title:"Bourse Erasmus Mundus 2026-2027 : ouverture des candidatures",cat:"Bourses",catColor:"#F5A623",img:"https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&q=80",author:"Jean-Baptiste Koffi",date:"28 mars 2026",time:"5",views:521,excerpt:"Le programme Erasmus Mundus ouvre ses candidatures pour 2026-2027. Jusqu'à 25 000€ de bourse pour un master en Europe.",featured:false},
+  {title:"Green Card loterie DV-2027 : date d'inscription et éligibilité",cat:"Immigration",catColor:"#1A3A5C",img:"https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80",author:"Rédaction",date:"26 mars 2026",time:"3",views:678,excerpt:"La loterie DV-2027 permet d'obtenir une Green Card américaine. Les ressortissants camerounais sont éligibles.",featured:false},
+  {title:"Visa étudiant en France : procédure Campus France 2026",cat:"Visas",catColor:"#00C2CB",img:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",author:"Aminata Diallo",date:"24 mars 2026",time:"6",views:443,excerpt:"Campus France simplifie les démarches pour les étudiants africains souhaitant étudier en France. Guide complet.",featured:false},
+  {title:"Bourse Commonwealth 2026 : guide complet pour postuler",cat:"Bourses",catColor:"#F5A623",img:"https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80",author:"David Mensah",date:"22 mars 2026",time:"7",views:389,excerpt:"Les bourses Commonwealth permettent d'étudier au Royaume-Uni. Critères d'éligibilité et conseils pour un dossier réussi.",featured:false},
+  {title:"Travailler en Allemagne : visa de travail pour ressortissants africains",cat:"Guides",catColor:"#2ECC71",img:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80",author:"Paul Nkemdirim",date:"18 mars 2026",time:"8",views:267,excerpt:"L'Allemagne recrute activement dans les secteurs de la santé, l'IT et l'ingénierie. Guide pour obtenir votre visa de travail.",featured:false},
+];
+
+// ── RENDER ARTICLES ───────────────────────
+function renderArticles(){
+  const grid = document.getElementById('articlesGrid');
+  if(!grid) return;
+  grid.innerHTML = ARTICLES.map((a,i) => `
+    <article class="article-card reveal" style="transition-delay:${i*0.07}s">
+      <a href="#" class="card-img-link" onclick="showPaywall(event)">
+        <img src="${a.img}" alt="${a.title}" loading="lazy">
+        ${a.featured?'<span class="feat-badge"><i class="fas fa-star"></i></span>':''}
+      </a>
+      <div class="card-body">
+        <span class="cat-badge" style="background:${a.catColor}">${a.cat}</span>
+        <h3><a href="#" onclick="showPaywall(event)">${a.title}</a></h3>
+        <p class="card-excerpt">${a.excerpt}</p>
+        <div class="card-meta">
+          <span><i class="fas fa-user"></i> ${a.author}</span>
+          <span><i class="fas fa-calendar"></i> ${a.date}</span>
+          <span><i class="fas fa-clock"></i> ${a.time} min</span>
+        </div>
+        <a href="#" class="read-more" onclick="showPaywall(event)">
+          Lire <i class="fas fa-lock locked-icon"></i> <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>`).join('');
+  observeReveal();
+}
+
+// ── MODALS ────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+function closeOnBg(e,id){if(e.target.id===id)closeModal(id)}
+function switchModal(from,to){closeModal(from);setTimeout(()=>openModal(to),200)}
+function showPaywall(e){e.preventDefault();openModal('paywallModal')}
+
+// ── AUTH FORMS ────────────────────────────
+function loginSubmit(e){
+  e.preventDefault();
+  closeModal('loginModal');
+  showFlash('Connexion réussie ! Bienvenue 👋','success');
+  setTimeout(()=>location.reload(),1500);
+}
+function registerSubmit(e){
+  e.preventDefault();
+  const pw=document.getElementById('regPw')?.value||'';
+  const pw2=document.getElementById('regPw2')?.value||'';
+  if(pw!==pw2){showFlash('Les mots de passe ne correspondent pas.','error');return}
+  closeModal('registerModal');
+  showFlash('Compte créé avec succès ! Bienvenue sur ImmigVision 🎉','success');
+  setTimeout(()=>location.reload(),1500);
+}
+
+// ── NEWSLETTER ────────────────────────────
+function nlSubmit(e){
+  e.preventDefault();
+  const email=document.getElementById('nlEmail')?.value||'';
+  if(!email.includes('@')){showFlash('Adresse email invalide.','error');return}
+  showFlash(`Merci ! Vous êtes inscrit(e) à la newsletter avec ${email} 📧`,'success');
+  e.target.reset();
+}
+
+// ── PASSWORD TOGGLE ───────────────────────
+function togglePw(id,btn){
+  const inp=document.getElementById(id);
+  if(!inp)return;
+  const show=inp.type==='text';
+  inp.type=show?'password':'text';
+  btn.innerHTML=show?'<i class="fas fa-eye"></i>':'<i class="fas fa-eye-slash"></i>';
+}
+function checkStrength(inp){
+  const bar=document.getElementById('pwBar');
+  if(!bar)return;
+  const v=inp.value;let s=0;
+  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  const colors=['','#E74C3C','#F5A623','#F5A623','#27AE60'];
+  const widths=['0%','25%','50%','75%','100%'];
+  bar.style.background=colors[s]||'';bar.style.width=widths[s];
+}
+
+// ── FLASH MESSAGES ────────────────────────
+function showFlash(msg, type='info'){
+  const zone=document.getElementById('flashZone');
+  const el=document.createElement('div');
+  const icons={success:'check-circle',info:'info-circle',error:'exclamation-circle'};
+  el.className=`flash ${type}`;
+  if(type==='error')el.classList.add('danger');
+  el.innerHTML=`<i class="fas fa-${icons[type]||'info-circle'}"></i> ${msg}
+    <button class="flash-x" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`;
+  zone.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),400)},5000);
+}
+
+// ── NAVBAR SCROLL ─────────────────────────
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.getElementById('navbar')?.classList.toggle('scrolled',y>40);
+  document.getElementById('backTop')?.classList.toggle('show',y>400);
+  // Reading progress
+  const prog=document.getElementById('read-prog');
+  if(prog){const pct=(y/(document.documentElement.scrollHeight-window.innerHeight))*100;prog.style.width=pct+'%'}
+},{passive:true});
+
+// ── HAMBURGER ─────────────────────────────
+document.getElementById('hamburger')?.addEventListener('click',function(){
+  const links=document.getElementById('navLinks');
+  const open=links?.classList.toggle('open');
+  const bars=this.querySelectorAll('span');
+  if(open){bars[0].style.cssText='transform:rotate(45deg) translate(5px,5px)';bars[1].style.cssText='opacity:0';bars[2].style.cssText='transform:rotate(-45deg) translate(5px,-5px)'}
+  else bars.forEach(b=>b.style.cssText='');
+});
+
+// ── SEARCH BAR ────────────────────────────
+document.getElementById('searchToggle')?.addEventListener('click',()=>{
+  const bar=document.getElementById('searchBar');
+  bar?.classList.toggle('open');
+  if(bar?.classList.contains('open'))bar.querySelector('input')?.focus();
+});
+document.getElementById('closeSearch')?.addEventListener('click',()=>document.getElementById('searchBar')?.classList.remove('open'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('searchBar')?.classList.remove('open');['loginModal','registerModal','paywallModal'].forEach(closeModal)}});
+
+// ── SCROLL REVEAL ─────────────────────────
+function observeReveal(){
+  if(!('IntersectionObserver' in window))return;
+  document.querySelectorAll('.reveal:not(.observed)').forEach((el,i)=>{
+    el.classList.add('observed');
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+    },{threshold:0.1});
+    obs.observe(el);
+  });
+}
+
+// ── COUNTER ANIMATION ─────────────────────
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=+el.dataset.count;
+    const duration=1800;const step=target/60;let current=0;
+    const timer=setInterval(()=>{
+      current=Math.min(current+step,target);
+      el.textContent=target>=10000?Math.round(current).toLocaleString('fr-FR'):Math.round(current);
+      if(current>=target)clearInterval(timer);
+    },duration/60);
+  });
+}
+
+// ── INIT ──────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  renderArticles();
+  setTimeout(animateCounters,500);
+  observeReveal();
+  console.log('%cImmigVision 🌍 Frontend Ready','color:#00C2CB;font-size:1.1rem;font-weight:bold');
+});
+</script>
+</body>
+</html>

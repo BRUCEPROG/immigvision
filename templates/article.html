@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} — {{ site_name }}{% endblock %}
+{% block meta_description %}{{ article.meta_description or article.excerpt[:160] }}{% endblock %}
+{% block meta_keywords %}{{ article.tags }}, immigration, visa{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block og_desc %}{{ article.meta_description or article.excerpt[:160] }}{% endblock %}
+{% block og_image %}{{ article.image_url or '/static/img/og-default.jpg' }}{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title|tojson }},
+  "description": {{ (article.meta_description or article.excerpt[:160])|tojson }},
+  "image": {{ (article.image_url or '')|tojson }},
+  "author": {"@type": "Person", "name": {{ article.author_name|tojson }}},
+  "datePublished": {{ article.created_at|tojson }},
+  "dateModified": {{ article.updated_at|tojson }},
+  "publisher": {"@type": "Organization", "name": {{ site_name|tojson }}}
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="article-layout">
+
+  <!-- ── ARTICLE HERO ───────────────────────────────────────────────────────── -->
+  <div class="article-hero">
+    {% if article.image_url %}
+    <div class="article-hero-img">
+      <img src="{{ article.image_url }}" alt="{{ article.title }}">
+      <div class="article-hero-overlay"></div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="fil d'Ariane">
+        <a href="/">Accueil</a>
+        <i class="fas fa-chevron-right"></i>
+        {% if article.cat_name %}
+        <a href="/categorie/{{ article.cat_slug }}">{{ article.cat_name }}</a>
+        <i class="fas fa-chevron-right"></i>
+        {% endif %}
+        <span>{{ article.title[:40] }}{% if article.title|length > 40 %}...{% endif %}</span>
+      </nav>
+
+      <div class="article-hero-content {% if article.image_url %}over-image{% endif %}">
+        {% if article.cat_name %}
+        <a href="/categorie/{{ article.cat_slug }}" class="cat-badge lg" style="background:{{ article.cat_color }}">
+          {{ article.cat_name }}
+        </a>
+        {% endif %}
+        <h1 class="article-title">{{ article.title }}</h1>
+        <div class="article-meta">
+          <span class="meta-item"><i class="fas fa-user"></i> {{ article.author_name }}</span>
+          <span class="meta-sep">·</span>
+          <span class="meta-item"><i class="fas fa-calendar-alt"></i> {{ article.created_at|datefmt }}</span>
+          <span class="meta-sep">·</span>
+          <span class="meta-item"><i class="fas fa-clock"></i> {{ article.reading_time }} min de lecture</span>
+          <span class="meta-sep">·</span>
+          <span class="meta-item"><i class="fas fa-eye"></i> {{ article.views }} vues</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ARTICLE BODY ──────────────────────────────────────────────────────── -->
+  <div class="container article-container">
+    <div class="article-main">
+
+      <!-- Content -->
+      <div class="article-body" id="articleBody">
+        {% if is_logged %}
+          <!-- Full content for logged-in users -->
+          {{ article.content|safe }}
+        {% else %}
+          <!-- Preview only -->
+          <p>{{ preview_text }}</p>
+
+          {% if show_paywall %}
+          <!-- Paywall overlay -->
+          <div class="paywall-overlay">
+            <div class="paywall-blur"></div>
+            <div class="paywall-card">
+              <div class="paywall-lock"><i class="fas fa-lock"></i></div>
+              <h3>Cet article est réservé aux membres</h3>
+              <p>Créez un compte <strong>gratuit</strong> pour lire l'intégralité de cet article et accéder à tous nos contenus sans restriction.</p>
+              <div class="paywall-perks">
+                <div class="perk"><i class="fas fa-check"></i> Accès illimité à tous les articles</div>
+                <div class="perk"><i class="fas fa-check"></i> Newsletter hebdomadaire</div>
+                <div class="perk"><i class="fas fa-check"></i> 100% gratuit, sans engagement</div>
+              </div>
+              <div class="paywall-btns">
+                <a href="/inscription?next={{ request.url }}" class="btn btn-primary btn-lg">
+                  <i class="fas fa-user-plus"></i> Créer mon compte gratuit
+                </a>
+                <a href="/connexion?next={{ request.url }}" class="btn btn-outline">Déjà membre ? Se connecter</a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <!-- Tags -->
+      {% if tags %}
+      <div class="article-tags">
+        <i class="fas fa-tags"></i>
+        {% for tag in tags %}
+        <a href="/recherche?q={{ tag }}" class="tag-pill">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Share -->
+      <div class="share-section">
+        <span class="share-label"><i class="fas fa-share-alt"></i> Partager :</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" class="share-btn fb" rel="noopener">
+          <i class="fab fa-facebook"></i> Facebook
+        </a>
+        <a href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ article.title }}" target="_blank" class="share-btn tw" rel="noopener">
+          <i class="fab fa-twitter"></i> Twitter
+        </a>
+        <a href="https://wa.me/?text={{ article.title }} {{ request.url }}" target="_blank" class="share-btn wa" rel="noopener">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <button class="share-btn copy" onclick="copyLink()">
+          <i class="fas fa-link"></i> Copier
+        </button>
+      </div>
+
+      <!-- CTA if not logged in -->
+      {% if not is_logged %}
+      <div class="article-cta-box">
+        <i class="fas fa-bell"></i>
+        <div>
+          <strong>Vous avez aimé cet article ?</strong>
+          <p>Inscrivez-vous pour accéder à tous nos guides et recevoir nos actualités.</p>
+        </div>
+        <a href="/inscription" class="btn btn-primary">S'inscrire gratuitement</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- ── SIDEBAR ──────────────────────────────────────────────────────────── -->
+    <aside class="article-sidebar">
+
+      <!-- Related articles -->
+      {% if related %}
+      <div class="sidebar-block">
+        <h4 class="sidebar-title"><i class="fas fa-link"></i> Articles liés</h4>
+        <div class="sidebar-articles">
+          {% for r in related %}
+          <a href="/article/{{ r.slug }}" class="sidebar-article">
+            {% if r.image_url %}
+            <img src="{{ r.image_url }}" alt="{{ r.title }}" loading="lazy">
+            {% else %}
+            <div class="sidebar-img-placeholder" style="background:{{ r.cat_color or '#1A3A5C' }}">
+              <i class="fas fa-newspaper"></i>
+            </div>
+            {% endif %}
+            <div>
+              {% if r.cat_name %}
+              <span class="cat-badge xs" style="background:{{ r.cat_color }}">{{ r.cat_name }}</span>
+              {% endif %}
+              <p>{{ r.title[:65] }}{% if r.title|length > 65 %}...{% endif %}</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Categories -->
+      <div class="sidebar-block">
+        <h4 class="sidebar-title"><i class="fas fa-th-large"></i> Catégories</h4>
+        <div class="sidebar-cats">
+          {% for cat in all_categories %}
+          <a href="/categorie/{{ cat.slug }}" class="sidebar-cat" style="border-color:{{ cat.color }}">
+            <i class="{{ cat.icon }}" style="color:{{ cat.color }}"></i> {{ cat.name }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Newsletter mini -->
+      <div class="sidebar-block sidebar-newsletter">
+        <h4><i class="fas fa-envelope"></i> Newsletter</h4>
+        <p>Recevez nos articles directement par email.</p>
+        <form action="/newsletter" method="POST">
+          <input type="email" name="email" placeholder="Votre email" required>
+          <button type="submit" class="btn btn-primary w-full">S'abonner</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.querySelector('.share-btn.copy');
+    btn.innerHTML = '<i class="fas fa-check"></i> Copié !';
+    setTimeout(() => btn.innerHTML = '<i class="fas fa-link"></i> Copier', 2000);
+  });
+}
+</script>
+{% endblock %}
