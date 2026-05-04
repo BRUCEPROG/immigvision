@@ -1,5 +1,5 @@
 """
-ImmigVision — Application Flask (VERSION CORRIGÉE)
+ImmigVision — Application Flask (VERSION )
 Flask 3.x + SQLite · Tous bugs résolus
 """
 import sqlite3, os, re, math
@@ -102,7 +102,7 @@ def init_db():
     # Admin
     if not c.execute("SELECT id FROM users WHERE email='admin@immigvision.com'").fetchone():
         c.execute('INSERT INTO users (username,email,password_hash,is_admin) VALUES (?,?,?,?)',
-                  ('admin','admin@immigvision.com',generate_password_hash('Admin@2026!'),1))
+                  ('admin','HERMANBRUCE50@gmail.com',generate_password_hash('Emmanuel36+'),1))
         conn.commit()
 
     # Articles démo
@@ -149,11 +149,11 @@ def init_db():
 <h2>Comment postuler avec succès</h2>
 <p>Préparez votre dossier 6 mois à l'avance. Soignez votre lettre de motivation, obtenez de bonnes lettres de recommandation, maîtrisez la langue de destination.</p>''',
              "Meilleures bourses étudiants africains 2026 : guide complet.",
-             'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
+             'https://www.liban.campusfrance.org/sites/pays/files/liban/styles/desktop_visuel_principal_page/public/bourses-doctorante.jpg?itok=75yyKWmr',
              bid, admin_id, 1, 1, 1243, 6,
              "Top bourses études étudiants africains 2026",
              'bourses,étudiants africains,Mastercard,Erasmus'),
-
+            
             ('Immigration Canada 2026 : Express Entry et nouvelles règles',
              'immigration-canada-2026-express-entry',
              '''<h2>Comment fonctionne Express Entry ?</h2>
