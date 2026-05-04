@@ -8,10 +8,10 @@ from functools import wraps
 from flask import (Flask, render_template, redirect, url_for, flash,
                    request, session, g, abort, make_response)
 from werkzeug.security import generate_password_hash, check_password_hash
-
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'immigvision-secret-key-2026-CHANGEME')
-DATABASE      = os.environ.get('DATABASE_PATH', os.path.join(app.root_path, 'immigvision.db'))
+DATABASE = os.getenv("DATABASE_PATH", "/tmp/immigvision.db")    
+os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
 SITE_NAME     = 'ImmigVision'
 SITE_TAGLINE  = "Votre portail de référence sur l'immigration, les visas et les bourses"
 PREVIEW_CHARS = 1200
@@ -40,6 +40,16 @@ def execute(sql, args=()):
     return cur.lastrowid
 
 def init_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    c.executescript('''
+    -- tes tables ici (tu gardes tout ton code SQL inchangé)
+    ''')
+
+    conn.commit()
+    conn.close() 
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
@@ -102,7 +112,7 @@ def init_db():
     # Admin
     if not c.execute("SELECT id FROM users WHERE email='admin@immigvision.com'").fetchone():
         c.execute('INSERT INTO users (username,email,password_hash,is_admin) VALUES (?,?,?,?)',
-                  ('admin','HERMANBRUCE50@gmail.com',generate_password_hash('Emmanuel36+'),1))
+                  ('admin'admin@immigvision.com',generate_password_hash('Admin@2026!'),1))
         conn.commit()
 
     # Articles démo
